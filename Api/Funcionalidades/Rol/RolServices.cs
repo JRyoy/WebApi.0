@@ -66,7 +66,7 @@ public class RolServices : IRolServices
         context.SaveChanges();
     }
 
-    // Obtener todos los roles
+
     public List<RolQueryDto> GetRol()
     {
         return context.Rols.Select(r => new RolQueryDto
@@ -78,7 +78,7 @@ public class RolServices : IRolServices
         }).ToList();
     }
 
-    // Obtener un rol por Id
+
     public RolQueryDto GetRol(int IdRol)
     {
         var rolExistente = context.Rols.Find(IdRol);

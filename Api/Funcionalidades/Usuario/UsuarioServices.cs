@@ -73,16 +73,6 @@ public class Usuarioservices : IUsuarioServices
       
         public List<Entidades.Usuario> GetUser()
         {
-            // var usuarios = context.Usuarios
-            //     .Select(u => new UsuarioQueryDto
-            //     {
-            //         IdUsuario = u.IdUsuario,
-            //         Nombre = u.Nombre,
-            //         Email = u.Email,
-            //         Pass = u.Pass,
-            //         Estado = u.Estado
-            //     }).ToList();
-
             var usuarios = context.Usuarios.ToList();
             return usuarios;
         }

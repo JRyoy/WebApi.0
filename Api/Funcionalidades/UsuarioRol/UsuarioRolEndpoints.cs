@@ -11,19 +11,19 @@ public class UsuarioRolEndpoints : ICarterModule
 {
     public void AddRoutes(IEndpointRouteBuilder app)
     {
-        app.MapPost("/Asignar Rol", async (IUsuarioRolServices usuarioRolServices, UsuarioRolCommandDto usuarioRolDto) =>
+        app.MapPost("/AsignarRol", async ([FromServices] IUsuarioRolServices usuarioRolServices, UsuarioRolCommandDto usuarioRolDto) =>
         {
             usuarioRolServices.AsignarRol(usuarioRolDto);
-            return Results.Ok("Rol asignado exitosamente.");
+            return Results.Ok("Rol/asignado exitosamente.");
         });
 
-        app.MapDelete("/Eliminar Rol de Un Usuario/{idUsuario:int}/{idRol:int}", async (IUsuarioRolServices usuarioRolServices, int idUsuario, int idRol) =>
+        app.MapDelete("/EliminarRolUsuario/{idUsuario:int}/{idRol:int}",  ([FromServices] IUsuarioRolServices usuarioRolServices, int idUsuario, int idRol) =>
         {
             usuarioRolServices.DeleteRoldelUsuario(idUsuario, idRol);
             return Results.Ok("Rol eliminado exitosamente del usuario.");
         });
 
-        app.MapGet("Ver Roles del Usuario/{idUsuario:int}", async (IUsuarioRolServices usuarioRolServices, int idUsuario) =>
+        app.MapGet("VerRolesdelUsuario/{idUsuario:int}", ([FromServices] IUsuarioRolServices usuarioRolServices, int idUsuario) =>
         {
             var roles = usuarioRolServices.GetRolesdelUsuario(idUsuario);
             return Results.Ok(roles);
