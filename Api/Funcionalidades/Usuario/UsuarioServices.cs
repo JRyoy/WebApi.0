@@ -4,9 +4,9 @@ namespace Api.Funcionalidades.Usuario;
 
 public interface IUsuarioServices
 {
-    void CreateUser(UsuarioCommandDto usuarioDto);
-    void UpdateUser(int IdRol,UsuarioCommandDto usuarioDto);
-    void DeleteUser(int IdRol);
+    Task CreateUser(UsuarioCommandDto usuarioDto);
+    Task UpdateUser(int IdRol,UsuarioCommandDto usuarioDto);
+    Task DeleteUser(int IdRol);
     List<Entidades.Usuario> GetUser();
     UsuarioQueryDto GetUser(int IdRol);
 }
@@ -17,38 +17,32 @@ public class Usuarioservices : IUsuarioServices
     {
         this.context = context;
     }
-    public void CreateUser(UsuarioCommandDto usuarioDto)
+    public async Task CreateUser(UsuarioCommandDto usuarioDto)
     {
-        if (usuarioDto.Email != null && usuarioDto.Pass != null)
-        {
-            var usuario = new Entidades.Usuario
+        var usuario = new Entidades.Usuario
             {
+                Nombre=usuarioDto.Nombre,
                 Email = usuarioDto.Email,
                 Pass = usuarioDto.Pass,
-                Estado = usuarioDto.Estado
             };
 
             context.Usuarios.Add(usuario);
-            context.SaveChangesAsync();
-        }
-        else
-        {
-            throw new ArgumentException("Email y contraseña son obligatorios.");
-        }
+            await context.SaveChangesAsync();
+        
     }
 
         // Actualizar usuario
-        public void UpdateUser(int IdUsuario, UsuarioCommandDto usuarioDto)
+        public async Task UpdateUser(int IdUsuario, UsuarioCommandDto usuarioDto)
         {
             var usuario = context.Usuarios.FirstOrDefault(u => u.IdUsuario == IdUsuario);
             if (usuario != null)
             {
+                usuario.Nombre=usuarioDto.Nombre;
                 usuario.Email = usuarioDto.Email;
                 usuario.Pass = usuarioDto.Pass;
-                usuario.Estado = usuarioDto.Estado;
 
                 context.Usuarios.Update(usuario);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
             else
             {
@@ -56,13 +50,13 @@ public class Usuarioservices : IUsuarioServices
             }
         }
 
-        public void DeleteUser(int IdUsuario)
+        public async Task DeleteUser(int IdUsuario)
         {
             var usuario = context.Usuarios.FirstOrDefault(u => u.IdUsuario == IdUsuario);
             if (usuario != null)
             {
                 context.Usuarios.Remove(usuario);
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
             else
             {

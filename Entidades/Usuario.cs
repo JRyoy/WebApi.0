@@ -18,7 +18,7 @@ public class Usuario
     [Required]
     [StringLength(50)]
     public string Pass { get; set; } 
-    [Required]
+
     public bool Estado{ get; set; }
     [Required]
     public DateTime FechaCreacion { get; set; }
